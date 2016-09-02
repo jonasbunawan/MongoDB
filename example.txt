@@ -1,0 +1,74 @@
+{
+    firstname: "Jonas,
+    lastname: "Bunawan
+}
+
+//insert data into documents
+db.car.insert({
+    name:'honda',
+    'make': "accord",
+    "year": "2006"
+});
+
+//update collections
+db.car.update({
+    make: 'accord'
+    },
+    {$set:{
+    make: 'accord euro'
+    }
+})
+
+//adding another attribute onto a document
+db.car.update({
+    make: 'accord euro'
+    },
+    {$set:{
+    transmission: 'manual'
+    }
+}, {$upsert: true})
+
+//remove data, without parameter it will de-exist all of existing data, or else it will delete data based on the parameter, which is case sensitive, being passed to the command
+db.car.remove({name: "Honda"})
+
+//loop in MongoDB
+for(var i = 0; i < 10; i++){
+    db.example.insert({"x": i})
+}
+
+
+db.student.insert({
+    name: 'Joe',
+    undergrad: true,
+    units: 9,
+    classes: ['geography', 'math', 'journalism']
+})
+
+db.student.insert({
+    name: 'Jane',
+    undergrad: false,
+    units: 12,
+    classes: ['geography', 'science', 'journalism', 'history']
+})
+
+db.student.insert({
+    name: 'Kevin',
+    undergrad: true,
+    units: 3,
+    classes: ['geography']
+})
+
+db.student.insert({
+    name: 'Rachel',
+    undergrad: false,
+    units: 6,
+    classes: ['geography', 'history']
+})
+
+db.student.find({})
+db.student.find({'name': 'Rachel'}).pretty()
+db.student.find({units: {$gt: 6}})
+db.student.find({units: {$lt: 7}})
+db.student.find({classes: {$in: ['history']}}) // value of $in method should always be in array type
+db.student.find({classes: {$in:['history']}}).sort({units: 1}) // value of units determines hwo data is sorted, 1 is for ascending(smallest to highest), -1 is for descending(smallest to highest)
+db.student.find({}).sort({name:1}).limit(2)
